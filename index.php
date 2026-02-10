@@ -1,75 +1,7 @@
 <?php
 
-trait Language
-{
+require_once './db.php'
 
-    public static $language = 'Italiano';
-
-    public function getLanguage()
-    {
-        return self::$language;
-    }
-}
-
-class Genre
-{
-
-    public $name;
-
-    public function __construct($_name)
-    {
-        $this->name = $_name;
-    }
-};
-
-class Movie
-{
-
-    public $title;
-    public $year;
-    public $img;
-
-    protected $genre = [];
-
-    use Language;
-
-    public function __construct($_title, $_year, $_img, Genre $_genre)
-    {
-
-        $this->title = $_title;
-        $this->year = $_year;
-        $this->img = $_img;
-
-        $this->genre[] = $_genre;
-    }
-
-    public function addGenre(Genre $_genre)
-    {
-        $this->genre[] = $_genre;
-    }
-
-    public function getGenre()
-    {
-        $genres = '';
-
-        foreach ($this->genre as $genre) {
-
-            $genres .= $genre->name;
-
-            if ($this->genre[count($this->genre) - 1] != $genre) {
-                $genres .= ', ';
-            }
-        }
-
-        return $genres;
-    }
-}
-
-$avatar = new Movie('Avatar', 2009, 'https://filmartgallery.com/cdn/shop/files/Avatar-Vintage-Movie-Poster-Original_39aff406.jpg?v=1749589696', new Genre('Fantascienza'));
-
-$wallE = new Movie("Wall-E", 2008, 'https://www.ebay.it/itm/292628375448', new Genre('Fantascienza'));
-
-$avatar->addGenre(new Genre('prova'));
 
 // var_dump($avatar);
 
@@ -93,32 +25,21 @@ $avatar->addGenre(new Genre('prova'));
     <div class="container">
         <div class="row row-cols-3">
             <?php
-            echo "<div class='col my-3'>
+
+            foreach ($movies as $movie)
+                echo "<div class='col my-3'>
                 <div class='card'>
                     <div class='card-img-top mt-3'>
-                        <img src='" . $avatar->img . "' alt='Avatar'>
+                        <img src='" . $movie->img . "' alt='movie'>
                     </div>
                     <div class='card-body text-center'>
-                        <div>" . $avatar->title . "</div>
-                        <div>" . $avatar->year . "</div>
-                        <div>" . $avatar->getGenre() . "</div>
-                        <div>" . $avatar->getLanguage() . "</div>
+                        <div>" . $movie->title . "</div>
+                        <div>" . $movie->year . "</div>
+                        <div>" . $movie->getGenre() . "</div>
+                        <div>" . $movie->getLanguage() . "</div>
                     </div>
                 </div>
             </div>";
-            echo "<div class='col my-3'>
-                <div class='card'>
-                    <div class='card-img-top mt-3'>
-                        <img src='" . $wallE->img . "' alt='Wall-E'>
-                    </div>
-                    <div class='card-body text-center'>
-                        <div>" . $wallE->title . "</div>
-                        <div>" . $wallE->year . "</div>
-                        <div>" . $wallE->getGenre() . "</div>
-                        <div>" . $wallE->getLanguage() . "</div>
-                    </div>
-                </div>
-            </div>"
             ?>
         </div>
     </div>
