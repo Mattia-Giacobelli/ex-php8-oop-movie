@@ -1,5 +1,16 @@
 <?php
 
+trait Language
+{
+
+    public static $language = 'Italiano';
+
+    public function getLanguage()
+    {
+        return self::$language;
+    }
+}
+
 class Genre
 {
 
@@ -17,9 +28,10 @@ class Movie
     public $title;
     public $year;
     public $img;
-    public static $language = 'Italiano';
 
     protected $genre = [];
+
+    use Language;
 
     public function __construct($_title, $_year, $_img, Genre $_genre)
     {
@@ -29,11 +41,6 @@ class Movie
         $this->img = $_img;
 
         $this->genre[] = $_genre;
-    }
-
-    public function getLanguage()
-    {
-        return self::$language;
     }
 
     public function addGenre(Genre $_genre)
@@ -64,7 +71,7 @@ $wallE = new Movie("Wall-E", 2008, 'https://www.ebay.it/itm/292628375448', new G
 
 $avatar->addGenre(new Genre('prova'));
 
-var_dump($avatar);
+// var_dump($avatar);
 
 ?>
 
